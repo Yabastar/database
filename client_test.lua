@@ -1,10 +1,10 @@
-local example = require("example")
+local clientcode = require("clientcode")
 
-example.setuser("your_username")
-example.setpass("your_password")
-example.connect(123)
+clientcode.setuser("your_username")
+clientcode.setpass("your_password")
+clientcode.connect(78) -- Set the correct server ID here
 
-local success = example.writefile("server_folder/file.lua", "client_folder/file.lua")
+local success = clientcode.writefile("server_folder/file.lua", "client_folder/file.lua")
 
 if success then
     print("File written successfully.")
@@ -12,7 +12,7 @@ else
     print("Error writing the file.")
 end
 
-local content, error = example.get("disk1", "myfolder/file.lua")
+local content, error = clientcode.get("disk1", "myfolder/file.lua")
 if content then
     print(content)
 else
