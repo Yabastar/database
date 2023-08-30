@@ -1,5 +1,4 @@
-local rednet = peripheral.wrap("back")
-local serverId = 123 -- Replace with the actual server's ID
+local serverId = 78 -- Replace with the actual server's ID
 
 local api = {}
 
@@ -22,11 +21,11 @@ function api.connect(serverId)
 end
 
 function api.writefile(filePathServer, filePathClient)
+    local fileContent = fs.open(filePathClient, "r").readAll()
     local request = {
         command = "write",
         filePathServer = filePathServer,
-        filePathClient = filePathClient,
-        content = fs.open(filePathClient, "r").readAll()
+        content = fileContent
     }
     return sendRequest(request)
 end
