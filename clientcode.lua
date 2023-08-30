@@ -1,26 +1,24 @@
-local serverId = 78 -- Replace with the actual server's ID
-
-local api = {}
+local clientcode = {}
 
 local function sendRequest(request)
-    rednet.send(serverId, request)
+    rednet.send(clientcode.serverId, request)
     local senderId, response = rednet.receive()
     return response
 end
 
-function api.setuser(username)
-    api.username = username
+function clientcode.setuser(username)
+    clientcode.username = username
 end
 
-function api.setpass(password)
-    api.password = password
+function clientcode.setpass(password)
+    clientcode.password = password
 end
 
-function api.connect(serverId)
-    api.serverId = serverId
+function clientcode.connect(serverId)
+    clientcode.serverId = serverId
 end
 
-function api.writefile(filePathServer, filePathClient)
+function clientcode.writefile(filePathServer, filePathClient)
     local fileContent = fs.open(filePathClient, "r").readAll()
     local request = {
         command = "write",
@@ -30,7 +28,7 @@ function api.writefile(filePathServer, filePathClient)
     return sendRequest(request)
 end
 
-function api.get(disk, filePath)
+function clientcode.get(disk, filePath)
     local request = {
         command = "read",
         disk = disk,
@@ -44,4 +42,4 @@ function api.get(disk, filePath)
     end
 end
 
-return api
+return clientcode
