@@ -26,7 +26,7 @@ function api.processRequest(request)
         file.close()
         response.success = true
     elseif request.command == "read" then
-        local filePath = request.disk .. "/" .. request.filePath
+        local filePath = request.filePathServer
         local success, content = pcall(grantAccess, filePath)
 
         if success then
@@ -48,11 +48,17 @@ function api.run()
     rednet.open("back")
 
     while true do
-        local senderId, request = rednet.receive()
+        local senderId, message = rednet.receive()
 
-        if type(request) == "table" then
-            local response = api.processRequest(request)
-            rednet.send(senderId, response)
+        if type(message) == "table" and message.username and message.password then
+            if api.authenticate(message.username, message.password) then
+                local response = api.processRequest(message)
+                rednet.send(senderId, response)
+            else
+                rednet.send(senderId, { success = false, error = "Invalid credentials." })
+            end
+        else
+            rednet.send(senderId, { success = false, error = "Invalid request format." })
         end
     end
 end
