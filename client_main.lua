@@ -1,3 +1,4 @@
+local rednet = peripheral.wrap("back")
 local clientcode = require("clientcode")
 
 clientcode.setuser("your_username")
