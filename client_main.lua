@@ -1,9 +1,8 @@
-local rednet = peripheral.wrap("back")
 local clientcode = require("clientcode")
 
 clientcode.setuser("your_username")
 clientcode.setpass("your_password")
-clientcode.connect(78) -- Set the correct server ID here
+clientcode.connect(int(input("server id: "))) -- Set the correct server ID here
 
 local success = clientcode.writefile("server_folder/file.lua", "client_folder/file.lua")
 
